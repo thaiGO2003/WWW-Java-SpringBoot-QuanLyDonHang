@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Danh sach don hang</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		
+		<h2 class = "text-center">17-LuongQuocThai-287387328</h2>
+		<div class = "text-center"><a th:href="@{/donhang}">Danh sach don hang</a>
+		| <a
+			th:href="@{/donhang/save/-1}">Them moi don hang</a></div>
+		<form class = "form" th:action="@{/donhang/save}" method = "post"  th:object="${donHang}">
+		<input type="hidden" id="id" name="id" th:value="*{id}">
+			<div>
+				Ten khach hang
+				<input id = "tenKhachHang" type = "text" class = "form-control" name = "tenKhachHang" th:value="*{tenKhachHang}">
+				<p th:errors ="*{tenKhachHang}" class = "text-danger" th:if="${#fields.hasErrors('tenKhachHang')}"></p>
+			</div>
+			<div>
+				Email
+				<input id = "email" type = "email" class = "form-control" name = "email" th:value="*{email}">
+				<p th:errors="*{email}" class = "text-danger"  th:if="${#fields.hasErrors('email')}"></p>
+			</div>
+			<div>
+				Ngay dat hang
+				<input id = "ngayDatHang" type = "date" class = "form-control" name = "ngayDatHang" th:value="*{ngayDatHang}">
+				<p th:errors ="*{ngayDatHang}" class = "text-danger"  th:if="${#fields.hasErrors('ngayDatHang')}"></p>
+			</div>
+			<div>
+				Ten san pham
+				<input id = "tenSP" type = "text" class = "form-control" name = "tenSP" th:value="*{tenSP}">
+				<p th:errors ="*{tenSP}" class = "text-danger"  th:if="${#fields.hasErrors('tenSP')}"></p>
+			</div>
+			<div class="form-group">
+				<!-- Hidden field để đảm bảo luôn có giá trị -->
+				Trang thai: 
+
+				<!-- Radio button cho "true" -->
+				<input type="radio" id="isActiveFalse" name="trangThai" th:value="false"
+					th:checked="${donHang.trangThai == false}" /> <label
+					for="isActiveFalse">Chua chap nhan</label>
+
+				<!-- Radio button cho "false" -->
+				<input type="radio" id="isActiveTrue" name="trangThai"
+					th:value="true" th:checked="${donHang.trangThai == true}" /> <label
+					for="isActiveTrue">Chap nhan</label>
+			</div>
+			<div class="form-group mb-5">
+				<label for="cuaHang_id">CuaHang</label> <select id="cuaHang_id"
+					name="cuaHang_id" class="form-control" th:field="*{cuaHang.maCuaHang}">
+					<option th:each="cuaHang : ${listCuaHang}"
+						th:value="${cuaHang.maCuaHang}" th:text="${cuaHang.ten}"
+						th:selected="*{cuaHang.maCuaHang == cuaHang.maCuaHang}"></option>
+				</select>
+			</div>
+			<button onclick="submit" class = "btn btn-primary form-control">Chap nhan</button>
+		</form>
+	</div>
+</body>
+</html>
